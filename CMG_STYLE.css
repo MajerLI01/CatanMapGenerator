@@ -4,6 +4,26 @@ body{
 }
 
 h1{
-    border-style: solid;
-    border: 4px white;
+    border: 2px solid white;
+}
+
+div {
+    display: inline-block;
+}
+
+button{
+    background-color:transparent;
+    color: white;
+}
+
+a{
+    color:greenyellow;
+}
+
+a:hover{
+
+}
+
+hr{
+    border: 4px;
 }
