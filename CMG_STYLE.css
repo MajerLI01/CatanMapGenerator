@@ -1,0 +1,9 @@
+body{
+    background: linear-gradient(90deg, #000000 0%, #b08013 100%);
+    color: white;
+}
+
+h1{
+    border-style: solid;
+    border: 4px white;
+}
