@@ -2,48 +2,96 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        
         <link rel="stylesheet" href="CMG_STYLE.css">
     </head>
     <body>
-        <header>
-            <div>
-                <h1>Catan Board Generator</h1>
-            </div>
-        </header>
+        <div class="container-fluid">
+            <div class="row m-4 justify-content-between">
+                <!--Left side-->
+                <div class="col-md-4 col-lg-4 h-100">
 
-        <div>
-            <button>
-                Clasic
-            </button>
-            <button>
-                Expansion
-            </button>
+                    <div class="d-flex brdr mb-3 justify-content-center">
+                        <h3>Catan Board Generator</h3>
+                    </div>
 
-            <button>
-                SHUFFLE
-            </button>
+                <!--BUTTONS_OPTIONS_AND LINK-->
+                    <div class="brdr ">
+                    <!--BUTTONS-->
+                        <div class="d-flex mt-2 justify-content-center">
+                            <button class="rounded btn_brdr">
+                                CLASSIC
+                            </button>
+                            <button class="rounded btn_brdr ml-5">
+                                EXPANSION
+                            </button>
+                        </div>
 
+                        <div class="d-flex mt-2 justify-content-center">
+                            <button class="rounded btn_brdr col-md-5">
+                                SHUFFLE
+                            </button>
+
+                        </div>
+
+                    <!--OPTIONS AND LINK FOR RULES-->
+                        <div class="mt-2 btoptions">
+                            <h5 class="mt-3">Options:</h5>
+
+                            <hr>
+
+                            <ul>
+                                <li>
+                                    <label for="cb1">6 & 8 can touch</label> 
+                                    <input type="checkbox" name="cb1">
+                                </li>
+                                <li>
+                                    <label for="cb2">2 & 12 can touch</label>
+                                    <input type="checkbox" name="cb2">
+                                </li>
+                                <li>
+                                    <label for="cb3">Same numbers can touch</label>
+                                    <input type="checkbox" name="cb3">
+                                </li>
+                                <li>
+                                    <label for="cb4">Same resources can touch</label>
+                                    <input type="checkbox" name="cb4">
+                                </li>
+                                <li>
+                                    <label for="cb5">Trade values are equal</label>
+                                    <input type="checkbox" name="cb5">
+                                </li>
+                                <li>
+                                    <label for="cb6">Randomize harbors</label>
+                                    <input type="checkbox" name="cb6">
+                                </li>
+                            </ul>
+
+                        <!--LINK-->
+                            <hr>
+                        
+                            <h5 class="mb-3">
+                                For information about 
+                                the rules please click here:
+                                <a href="https://www.catan.com/understand-catan/game-rules">link</a>
+                            </h5>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--Right side for map-->
+                <div class="col-md-8 col-lg-8 brdr mt-2 ms-4 align-content-center">
+                    MAP
+                </div>
+            </div>    
         </div>
-        <br>
-        <div>
-            <h3>Options:</h3>
-            <ul>
-                <li>6 & 8 can touch</li>
-                <li>2 & 12 can touch</li>
-                <li>Same numbers can touch</li>
-                <li>Same resources can touch</li>
-                <li>Trade values are equal</li>
-                <li>Randomize harbors</li>
-            </ul>
-
-            <hr >
-
-            <h3>For information about <br>the rules please <a href="https://www.catan.com/understand-catan/game-rules">click here</a>.</h3>
-        </div>
-
-        <footer>
+        <!--Footer-->
+       <footer class="d-flex fixed-bottom align-center p-2 justify-content-end">
             <div>
-                <i>Made by: Majer László István</i>
+                <i>Made by: XY</i>
             </div>
         </footer>
     </body>
