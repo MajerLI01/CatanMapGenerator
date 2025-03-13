@@ -1,0 +1,36 @@
+body{
+    background: linear-gradient(90deg, #000000 0%, #b08013 100%);
+    color: white;
+}
+
+.brdr {
+    border: 3px solid white;
+}
+
+.btn_brdr {
+    background-color: transparent;
+    color: white;
+    border: 2px solid;
+}
+
+hr {
+    height: 2px;
+    width: 90%;
+    background-color: white;
+}
+
+ul {
+    text-align: left;
+}
+
+.btoptions {
+    border-top: 3px solid white;
+}
+
+div {
+    text-align: center;
+}
+
+a{
+    color:greenyellow;
+}
