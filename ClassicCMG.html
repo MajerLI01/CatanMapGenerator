@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="d-flex mt-2 justify-content-center">
-                            <button class="rounded btn_brdr w-50">
+                            <button id="shuffleBtn" class="rounded btn_brdr w-50">
                                 SHUFFLE
                             </button>
 
@@ -45,27 +45,27 @@
                             <ul>
                                 <li>
                                     <label for="cb1">6 & 8 can touch</label> 
-                                    <input type="checkbox" name="cb1">
+                                    <input id="cb1" type="checkbox">
                                 </li>
                                 <li>
                                     <label for="cb2">2 & 12 can touch</label>
-                                    <input type="checkbox" name="cb2">
+                                    <input id="cb2" type="checkbox">
                                 </li>
                                 <li>
                                     <label for="cb3">Same numbers can touch</label>
-                                    <input type="checkbox" name="cb3">
+                                    <input id="cb3" type="checkbox">
                                 </li>
                                 <li>
                                     <label for="cb4">Same resources can touch</label>
-                                    <input type="checkbox" name="cb4">
+                                    <input id="cb4" type="checkbox">
                                 </li>
                                 <li>
-                                    <label for="cb5">Trade values are equal</label>
-                                    <input type="checkbox" name="cb5">
+                                    <label for="cb5">randomize harbor values</label>
+                                    <input id="cb5" type="checkbox">
                                 </li>
                                 <li>
-                                    <label for="cb6">Randomize harbors</label>
-                                    <input type="checkbox" name="cb6">
+                                    <label for="cb6">Randomize harbor positions</label>
+                                    <input id="cb6" type="checkbox">
                                 </li>
                             </ul>
 
@@ -88,34 +88,34 @@
                     <section>
                         <div  class="container board-base border-normal">
                             <div class="hex-row">
-                                <div id="t0" class="hex">8</div>
-                                <div id="t1" class="hex">3</div>
-                                <div id="t2" class="hex">10</div>
-                            </div>
-                            <div class="hex-row offset">
-                                <div id="t3" class="hex">3</div>
-                                <div id="t4" class="hex">11</div>
-                                <div id="t5" class="hex">8</div>
-                                <div id="t6" class="hex">5</div>
-                            </div>
-                            <div class="hex-row">
-                                <div id="t7" class="hex">6</div>
-                                <div id="t8" class="hex">2</div>
-                                <div id="t9" class="hex">12</div>
-                                <div id="t10" class="hex">5</div>
-                                <div id="t11" class="hex">5</div>
-                            </div>
-                            <div class="hex-row offset">
-                                <div id="t12" class="hex">9</div>
-                                <div id="t13" class="hex">10</div>
-                                <div id="t14" class="hex">4</div>
-                                <div id="t15" class="hex">6</div>
-                            </div>
-                            <div class="hex-row">
-                                <div id="t16" class="hex">11</div>
-                                <div id="t17" class="hex">9</div>
-                                <div id="t18" class="hex">4</div>
-                            </div>
+                                <div id="t0" class="hex"></div>
+                                <div id="t1" class="hex"></div>
+                                <div id="t2" class="hex"></div>
+                              </div>
+                              <div class="hex-row offset">
+                                <div id="t3" class="hex"></div>
+                                <div id="t4" class="hex"></div>
+                                <div id="t5" class="hex"></div>
+                                <div id="t6" class="hex"></div>
+                              </div>
+                              <div class="hex-row">
+                                <div id="t7" class="hex"></div>
+                                <div id="t8" class="hex"></div>
+                                <div id="t9" class="hex"></div>
+                                <div id="t10" class="hex"></div>
+                                <div id="t11" class="hex"></div>
+                              </div>
+                              <div class="hex-row offset">
+                                <div id="t12" class="hex"></div>
+                                <div id="t13" class="hex"></div>
+                                <div id="t14" class="hex"></div>
+                                <div id="t15" class="hex"></div>
+                              </div>
+                              <div class="hex-row">
+                                <div id="t16" class="hex"></div>
+                                <div id="t17" class="hex"></div>
+                                <div id="t18" class="hex"></div>
+                              </div>
                         </div>
                    </section>
                 </div>
@@ -127,5 +127,8 @@
                 <i>Made by: Majer László István</i>
             </div>
         </footer>
+        <script src="scripts/numbers.js"></script>
+        <script src="scripts/resources.js"></script>
+        <script src="scripts/main.js"></script>
     </body>
 </html>

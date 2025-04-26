@@ -17,7 +17,6 @@
 .hex {
     width: calc(100% / 6.7);
     height: 124.775px;
-    background-image:url(sources/irl_resources/wood.png) ;
     background-size: 100% 100% ;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     display: flex;
