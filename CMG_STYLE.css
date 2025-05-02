@@ -3,6 +3,14 @@ body{
     color: white;
 }
 
+.col-sm-12.col-md-12.col-lg-4 {
+    min-width: 280px;
+}
+
+.row {
+    flex-wrap: wrap;
+}
+
 .brdr {
     border: 3px solid white;
 }
