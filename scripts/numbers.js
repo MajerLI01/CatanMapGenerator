@@ -78,11 +78,12 @@ const numbersModule = (function () {
     
         hexes.forEach((hex, index) => {
             const hexId = `t${index}`;
+            const numberImg = hex.querySelector('.number-img');
     
             // skipping desert
             if (currentResources[hexId] === 'desert') {
                 currentNumbers[hexId] = '';
-                hex.textContent = '';
+                numberImg.src = '';
                 return;
             }
     
@@ -94,7 +95,7 @@ const numbersModule = (function () {
                 const number = availableNumbers[0];
                 if (isValidNumberPlacement(hexId, number, currentNumbers, currentResources, options)) {
                     currentNumbers[hexId] = number;
-                    hex.textContent = number;
+                    numberImg.src = `sources/numbers/${number}.png`;
                     availableNumbers.shift();
                     placed = true;
                 } else {
@@ -108,7 +109,7 @@ const numbersModule = (function () {
             if (!placed && availableNumbers.length > 0) {
                 const fallbackNumber = availableNumbers.shift();
                 currentNumbers[hexId] = fallbackNumber;
-                hex.textContent = fallbackNumber;
+                numberImg.src = `sources/numbers/${fallbackNumber}.png`;
             }
         });
     

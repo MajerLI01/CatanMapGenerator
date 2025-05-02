@@ -4,7 +4,7 @@ body{
 }
 
 .col-sm-12.col-md-12.col-lg-4 {
-    min-width: 280px;
+    min-width: 300px;
 }
 
 .row {
@@ -13,6 +13,14 @@ body{
 
 .brdr {
     border: 3px solid white;
+}
+
+.picker {
+    background-color: transparent;
+    color: white;
+    border: 2px solid;
+    text-align: center; 
+    text-align-last: center;
 }
 
 .btn_brdr {
