@@ -20,21 +20,19 @@
                     <div class="brdr ">
 
                         <!--BUTTONS-->
-                        <div class="d-flex justify-content-center mb-2 mt-2 justify-content-around">
-                            <button class="btn_brdr rounded w-40">
-                                CLASSIC
-                            </button>
-                            <button class="btn_brdr rounded w-40">
-                                EXPANSION
-                            </button>
+                        <div class="d-flex justify-content-center mb-2 mt-2 justify-content-center">
+                            <Select id="resourceSelect" name="resourceSelect" class="btn-dark picker w-50">
+                                <option value="OriginalResources">original</option>
+                                <option value="IRLResources">real images</option>
+                            </Select>
                         </div>
-
+    
                         <div class="d-flex mt-2 justify-content-center">
                             <button id="shuffleBtn" class="rounded btn_brdr w-50">
                                 SHUFFLE
                             </button>
-
                         </div>
+    
 
                         <!--OPTIONS AND LINK FOR RULES-->
                         <div class="mt-2 btoptions">
@@ -60,7 +58,7 @@
                                     <input id="cb4" type="checkbox">
                                 </li>
                                 <li>
-                                    <label for="cb5">randomize harbor values</label>
+                                    <label for="cb5">Shuffle harbors</label>
                                     <input id="cb5" type="checkbox">
                                 </li>
                                 <li>
@@ -88,34 +86,34 @@
                     <section>
                         <div  class="container board-base border-normal">
                             <div class="hex-row">
-                                <div id="t0" class="hex"></div>
-                                <div id="t1" class="hex"></div>
-                                <div id="t2" class="hex"></div>
-                              </div>
-                              <div class="hex-row offset">
-                                <div id="t3" class="hex"></div>
-                                <div id="t4" class="hex"></div>
-                                <div id="t5" class="hex"></div>
-                                <div id="t6" class="hex"></div>
-                              </div>
-                              <div class="hex-row">
-                                <div id="t7" class="hex"></div>
-                                <div id="t8" class="hex"></div>
-                                <div id="t9" class="hex"></div>
-                                <div id="t10" class="hex"></div>
-                                <div id="t11" class="hex"></div>
-                              </div>
-                              <div class="hex-row offset">
-                                <div id="t12" class="hex"></div>
-                                <div id="t13" class="hex"></div>
-                                <div id="t14" class="hex"></div>
-                                <div id="t15" class="hex"></div>
-                              </div>
-                              <div class="hex-row">
-                                <div id="t16" class="hex"></div>
-                                <div id="t17" class="hex"></div>
-                                <div id="t18" class="hex"></div>
-                              </div>
+                                <div id="t0" class="hex"><img class="number-img" /></div>
+                                <div id="t1" class="hex"><img class="number-img" /></div>
+                                <div id="t2" class="hex"><img class="number-img" /></div>
+                            </div>
+                            <div class="hex-row offset">
+                                <div id="t3" class="hex"><img class="number-img" /></div>
+                                <div id="t4" class="hex"><img class="number-img" /></div>
+                                <div id="t5" class="hex"><img class="number-img" /></div>
+                                <div id="t6" class="hex"><img class="number-img" /></div>
+                            </div>
+                            <div class="hex-row">
+                                <div id="t7" class="hex"><img class="number-img" /></div>
+                                <div id="t8" class="hex"><img class="number-img" /></div>
+                                <div id="t9" class="hex"><img class="number-img" /></div>
+                                <div id="t10" class="hex"><img class="number-img" /></div>
+                                <div id="t11" class="hex"><img class="number-img" /></div>
+                            </div>
+                            <div class="hex-row offset">
+                                <div id="t12" class="hex"><img class="number-img" /></div>
+                                <div id="t13" class="hex"><img class="number-img" /></div>
+                                <div id="t14" class="hex"><img class="number-img" /></div>
+                                <div id="t15" class="hex"><img class="number-img" /></div>
+                            </div>
+                            <div class="hex-row">
+                                <div id="t16" class="hex"><img class="number-img" /></div>
+                                <div id="t17" class="hex"><img class="number-img" /></div>
+                                <div id="t18" class="hex"><img class="number-img" /></div>
+                            </div>            
                         </div>
                    </section>
                 </div>
