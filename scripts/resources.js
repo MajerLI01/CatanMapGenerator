@@ -63,39 +63,72 @@ const resourcesModule = (function () {
     }
 
     return currentResources;
-}
+  }
 
-function tryPlaceResources(hexes, options) {
-    const desertIdx = Math.floor(Math.random() * hexes.length);
+  function tryPlaceResources(hexes, options) {
+    // Filter out ocean hexes (those with IDs starting with 'b')
+    const terrainHexes = [];
+    const oceanHexes = [];
+    
+    // Separate terrain hexes from ocean hexes
+    for (let i = 0; i < hexes.length; i++) {
+      const hex = hexes[i];
+      if (hex.id && hex.id.startsWith('t')) {
+        terrainHexes.push(hex);
+      } else if (hex.id && hex.id.startsWith('b')) {
+        oceanHexes.push(hex);
+      }
+    }
+    
+    // Make sure ocean hexes stay as ocean
+    oceanHexes.forEach(hex => {
+      hex.style.backgroundImage = '';
+      hex.classList.add('hex-ocean');
+    });
+    
     const currentResources = {};
     let pool = shuffleArray([...resources]);
-
-    // Desert
-    currentResources[`t${desertIdx}`] = DESERT;
-    hexes[desertIdx].style.backgroundImage = `url(sources/irl_resources/${DESERT}.png)`;
-
-    // placing the resources
-    for (let i = 0; i < hexes.length; i++) {
-        if (i === desertIdx) continue;
-
-        const hexId = `t${i}`;
-        let placed = false;
-        for (let j = 0; j < pool.length; j++) {
-            const r = pool[j];
-            if (isValidResourcePlacement(hexId, r, currentResources, options)) {
-                currentResources[hexId] = r;
-                hexes[i].style.backgroundImage = `url(sources/irl_resources/${r}.png)`;
-                pool.splice(j, 1);
-                placed = true;
-                break;
-            }
+    
+    // Choose random terrain hex for desert
+    const desertIdx = Math.floor(Math.random() * terrainHexes.length);
+    const desertHexId = terrainHexes[desertIdx].id;
+    
+    // Place desert
+    currentResources[desertHexId] = DESERT;
+    terrainHexes[desertIdx].style.backgroundImage = `url(sources/irl_resources/${DESERT}.png)`;
+    
+    // Place resources on remaining terrain hexes
+    for (let i = 0; i < terrainHexes.length; i++) {
+      const hex = terrainHexes[i];
+      const hexId = hex.id;
+      
+      // Skip the desert hex
+      if (hexId === desertHexId) continue;
+      
+      let placed = false;
+      for (let j = 0; j < pool.length; j++) {
+        const r = pool[j];
+        if (isValidResourcePlacement(hexId, r, currentResources, options)) {
+          currentResources[hexId] = r;
+          hex.style.backgroundImage = `url(sources/irl_resources/${r}.png)`;
+          pool.splice(j, 1);
+          placed = true;
+          break;
         }
+      }
+      
+      // If we couldn't place a valid resource, use the first one in the pool
+      if (!placed && pool.length > 0) {
+        const r = pool.shift();
+        currentResources[hexId] = r;
+        hex.style.backgroundImage = `url(sources/irl_resources/${r}.png)`;
+      }
     }
 
     return currentResources;
-}
+  }
 
   return {
-    placeResources : placeResources
+    placeResources: placeResources
   };
 })();
