@@ -1,5 +1,5 @@
 const numbersModule = (function () {
-    // neighbor map for the hexagons
+    // Neighbor map for the hexagons
     const neighbors = {
         't0': ['t1', 't3', 't4'],
         't1': ['t0', 't2', 't4', 't5'],
@@ -25,21 +25,10 @@ const numbersModule = (function () {
     // Catan numbers
     const numbers = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
 
-    // Fisher-Yates shuffle
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    // checking number neighbors
+    // Checking number neighbors
     function isValidNumberPlacement(hexId, number, currentNumbers, currentResources, options) {
-        // if the hexagon is a desert
-        if (currentResources[hexId] === 'desert') {
-            return false;
-        }
+        // If the hexagon is a desert
+        if (currentResources[hexId] === 'desert') return false;
 
         const adjacentHexes = neighbors[hexId];
         for (let adjId of adjacentHexes) {
@@ -70,51 +59,66 @@ const numbersModule = (function () {
         return true;
     }
 
-    // placing the numbers
+    // Placing the numbers using backtracking
     function placeNumbers(hexes, currentResources, options) {
-        let availableNumbers = [...numbers];
-        shuffleArray(availableNumbers);
-        let currentNumbers = {};
-    
-        hexes.forEach((hex, index) => {
-            const hexId = `t${index}`;
+        // Filter terrain hexes (t0-t18)
+        const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
+        const currentNumbers = {};
+
+        // Initialize available numbers count
+        const availableNumbers = {};
+        numbers.forEach(num => {
+            availableNumbers[num] = (availableNumbers[num] || 0) + 1;
+        });
+
+        // Backtracking function
+        function backtrack(index) {
+            if (index >= terrainHexes.length) {
+                return true; // All hexes assigned
+            }
+
+            const hex = terrainHexes[index];
+            const hexId = hex.id;
             const numberImg = hex.querySelector('.number-img');
-    
-            // skipping desert
+
+            // Skip desert
             if (currentResources[hexId] === 'desert') {
                 currentNumbers[hexId] = '';
-                numberImg.src = '';
-                return;
+                if (numberImg) numberImg.src = '';
+                return backtrack(index + 1);
             }
-    
-            let placed = false;
-            let attempts = 0;
-            const maxAttempts = 50;
-    
-            while (!placed && attempts < maxAttempts && availableNumbers.length > 0) {
-                const number = availableNumbers[0];
-                if (isValidNumberPlacement(hexId, number, currentNumbers, currentResources, options)) {
-                    currentNumbers[hexId] = number;
-                    numberImg.src = `sources/numbers/${number}.png`;
-                    availableNumbers.shift();
-                    placed = true;
-                } else {
-                    availableNumbers.shift();
-                    availableNumbers.push(number);
-                    attempts++;
+
+            // Try each number
+            for (const number in availableNumbers) {
+                if (availableNumbers[number] > 0 && isValidNumberPlacement(hexId, Number(number), currentNumbers, currentResources, options)) {
+                    // Place number
+                    currentNumbers[hexId] = Number(number);
+                    if (numberImg) numberImg.src = `sources/numbers/${number}.png`;
+                    availableNumbers[number]--;
+
+                    // Recurse to next hex
+                    if (backtrack(index + 1)) {
+                        return true;
+                    }
+
+                    // Backtrack: remove number and restore count
+                    delete currentNumbers[hexId];
+                    if (numberImg) numberImg.src = '';
+                    availableNumbers[number]++;
                 }
             }
-    
-            // if we've reached maxattempts, we put a number anyway
-            if (!placed && availableNumbers.length > 0) {
-                const fallbackNumber = availableNumbers.shift();
-                currentNumbers[hexId] = fallbackNumber;
-                numberImg.src = `sources/numbers/${fallbackNumber}.png`;
-            }
-        });
-    
-        return currentNumbers;
+
+            return false; // No valid placement found
+        }
+
+        // Start backtracking from index 0
+        const success = backtrack(0);
+
+        if (success) {
+            return currentNumbers;
+        }
     }
+
     return {
         placeNumbers: placeNumbers
     };
