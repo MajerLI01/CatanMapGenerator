@@ -1,0 +1,95 @@
+/* Top ocean row */
+#b0 {
+    background-image: url("sources/ocean/1_sided_beach.png");
+    transform: rotate(62deg);
+}
+
+#b1 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(180deg); 
+}
+
+#b2{ 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(180deg);
+}
+
+#b3{ 
+    background-image: url("sources/ocean/1_sided_beach.png");
+    transform: rotate(120deg); 
+}
+
+/* 1. row */
+#b4 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(120deg); 
+}
+
+#b5 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(-120deg); 
+}
+
+/* 2. row */
+#b6 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(120deg); 
+}
+
+
+#b7 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(-120deg); 
+}
+
+/* 3. row */
+#b8 { 
+    background-image: url("sources/ocean/1_sided_beach.png"); 
+}
+
+
+#b9 { 
+    background-image: url("sources/ocean/1_sided_beach.png");
+    transform: rotate(180deg); 
+}
+
+/* 4. row */
+#b10 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(60deg); 
+}
+
+#b11 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(-60deg); 
+}
+
+/* 5. row */
+#b12 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(60deg); 
+}
+
+#b13 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+    transform: rotate(-60deg);  
+}
+
+/* Bottom row */
+#b14 { 
+    background-image: url("sources/ocean/1_sided_beach.png");
+    transform: rotate(-60deg); 
+}
+
+#b15 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+}
+
+#b16 { 
+    background-image: url("sources/ocean/2_sided_beach.png");
+}
+
+#b17 { 
+    background-image: url("sources/ocean/1_sided_beach.png");
+    transform: rotate(-118deg); 
+}

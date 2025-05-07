@@ -37,16 +37,9 @@ const resourcesModule = (function () {
     }
 
     // Backtracking algorithm to place resources
-    function tryPlaceResources(hexes, options) {
+    function placeResources(hexes, options) {
         // Filter out ocean hexes (those with IDs starting with 'b')
         const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
-        const oceanHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('b'));
-
-        // Make sure ocean hexes stay as ocean
-        oceanHexes.forEach(hex => {
-            hex.style.backgroundImage = '';
-            hex.classList.add('hex-ocean');
-        });
 
         const currentResources = {};
 
@@ -112,10 +105,6 @@ const resourcesModule = (function () {
         if (success) {
             return currentResources;
         }
-    }
-
-    function placeResources(hexes, options) {
-        return tryPlaceResources(hexes, options);
     }
 
     return {
