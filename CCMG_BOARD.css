@@ -9,69 +9,53 @@
 .hex-row {
     display: flex;
     justify-content: center;
-    gap: 5px; /* A hexák pontosan összeérnek */
+    gap: 5px; /* hexes are closer */
     width: 100%;
-    margin-top: -3%;
-}
-
-.hex-ocean {
-    background-color: #1e3f66; /* vagy használhatsz background-image-t */
-    opacity: 0.8;
+    margin-top: -2.8%;
 }
 
 .hex {
-    width: calc(100% / 6.7);
-    height: 124.775px;
-    background-size: 100% 100% ;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    width: 6rem;
+    height: 7rem;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .offset {
-    margin-left: calc(100% / 230); /* Fél hexagonnyi eltolás */
+    margin-left: calc(100% / 230);  /* half hex offset */
 }
 
 .catanMap {
-    width: 99vh;
+    width: 100%;
+    max-width: 99vw;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
 }
 
-@media (max-width: 875px) {
-
-    .catanMap {
-        width: 100%;
-        max-width: 99vw;
-    }
+@media (max-width: 1175px) {
 
     .hex {
-        width: calc(100% / 6.7);
+        width: 5rem;
+        height: 6rem;
     }
 }
 
-@media(max-width: 700px){
-    .hex-row{
-        margin-top: -3.5%;
+@media (max-width: 710px) {
+
+    .hex {
+        width: 4rem;
+        height: 5rem;
     }
 }
 
-@media(max-width: 600px){
-    .hex-row{
-        margin-top: -5%;
-    }
-}
+@media (max-width: 600px) {
 
-@media(max-width: 500px){
-    .hex-row{
-        margin-top: -7%;
-    }
-}
-
-@media(max-width: 400px){
-    .hex-row{
-        margin-top: -9%;
+    .hex {
+        width: 3rem;
+        height: 4rem;
     }
 }
