@@ -8,17 +8,25 @@ document.addEventListener('DOMContentLoaded', function () {
         canChangeHarborPositions: document.getElementById('cb6')
     };
 
+    const picker = document.getElementById('resourceSelect');
+
     const shuffleButton = document.getElementById('shuffleBtn');
 
     const hexes = document.querySelectorAll('.hex');
 
+    let currentResources = {};
+
     function updateBoard() {
-        const currentResources = resourcesModule.placeResources(hexes, options);
+        currentResources = resourcesModule.placeResources(hexes, options, picker);
         numbersModule.placeNumbers(hexes, currentResources, options);
         oceanModule.placeOceans(hexes, options);
     }
 
     shuffleButton.addEventListener('click', updateBoard);
+    
+    picker.addEventListener('change', () => {
+        resourcesModule.changeOccuredOnPicker(hexes, currentResources, picker);
+    });
 
     updateBoard();
 });
