@@ -84,7 +84,7 @@ const numbersModule = (function () {
             // Skip desert
             if (currentResources[hexId] === 'desert') {
                 currentNumbers[hexId] = '';
-                if (numberImg) numberImg.src = '';
+                if (numberImg) numberImg.style.display = "none"; // For the image not found icon 
                 return backtrack(index + 1);
             }
 
@@ -93,7 +93,10 @@ const numbersModule = (function () {
                 if (availableNumbers[number] > 0 && isValidNumberPlacement(hexId, Number(number), currentNumbers, currentResources, options)) {
                     // Place number
                     currentNumbers[hexId] = Number(number);
-                    if (numberImg) numberImg.src = `sources/numbers/${number}.png`;
+                    if (numberImg) {
+                        numberImg.src = `sources/numbers/${number}.png`;
+                        numberImg.style.display = "block"; // Needed to set it back to display the  number img
+                    }
                     availableNumbers[number]--;
 
                     // Recurse to next hex
