@@ -36,8 +36,29 @@ const resourcesModule = (function () {
         return true;
     }
 
+    // Placing the resource based on the picker
+    function resourceSelection(hex, picker, res){
+        if(picker.selectedIndex == 0){
+            hex.style.backgroundImage = `url(sources/original_resources/${res}.png)`;
+        } else if(picker.selectedIndex == 1){
+            hex.style.backgroundImage = `url(sources/irl_resources/${res}.png)`;
+        }
+    }   
+
+    function changeOccuredOnPicker(hexes, currentResources, picker) {
+        const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
+
+        terrainHexes.forEach(hex => {
+            const hexId = hex.id;
+            const resource = currentResources[hexId];
+            if (resource) {
+                resourceSelection(hex, picker, resource);
+            }
+        });
+    }
+
     // Backtracking algorithm to place resources
-    function placeResources(hexes, options) {
+    function placeResources(hexes, options, picker) {
         // Filter out ocean hexes (those with IDs starting with 'b')
         const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
 
@@ -50,7 +71,7 @@ const resourcesModule = (function () {
 
         // Place desert
         currentResources[desertHexId] = DESERT;
-        desertHex.style.backgroundImage = `url(sources/irl_resources/${DESERT}.png)`;
+        resourceSelection(desertHex, picker, DESERT);
 
         // Initialize available resources count
         const availableResources = {
@@ -81,7 +102,7 @@ const resourcesModule = (function () {
                 if (availableResources[resource] > 0 && isValidResourcePlacement(hexId, resource, currentResources, options)) {
                     // Place resource
                     currentResources[hexId] = resource;
-                    hex.style.backgroundImage = `url(sources/irl_resources/${resource}.png)`;
+                    resourceSelection(hex, picker, resource);
                     availableResources[resource]--;
 
                     // Recurse to next hex
@@ -108,6 +129,7 @@ const resourcesModule = (function () {
     }
 
     return {
-        placeResources: placeResources
+        placeResources: placeResources,
+        changeOccuredOnPicker: changeOccuredOnPicker
     };
 })();
