@@ -37,14 +37,86 @@ const resourcesModule = (function () {
     }
 
     // Placing the resource based on the picker
-    function resourceSelection(hex, picker, res){
-        if(picker.selectedIndex == 0){
-            hex.style.backgroundImage = `url(sources/original_resources/${res}.png)`;
-        } else if(picker.selectedIndex == 1){
-            hex.style.backgroundImage = `url(sources/irl_resources/${res}.png)`;
-        }
-    }   
+    function resourceSelection(hex, picker, res) {
+        let resourcePath;
 
+        switch (picker.selectedIndex) {
+            case 0:
+                resourcePath = 'original';
+                break;
+            case 1:
+                resourcePath = 'irl';
+                break;
+            default:
+                resourcePath = 'original';
+                break;
+        }
+
+        hex.style.backgroundImage = `url(sources/${resourcePath}_resources/${res}.png)`;
+    }
+
+    // Fisher-Yates shuffling
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function placeResources(hexes, options, picker) {
+
+        const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
+
+        const currentResources = {}; // Dictionary for the resources
+
+        // Placing the Desert
+        const desertIdx = Math.floor(Math.random() * terrainHexes.length);
+        const desertHex = terrainHexes[desertIdx];
+        currentResources[desertHex.id] = DESERT;
+        resourceSelection(desertHex, picker, DESERT);
+
+        // Resources
+        const resourcePool = ['wood', 'wood', 'wood', 'wood', 'wheat', 'wheat', 'wheat', 'wheat',
+            'sheep', 'sheep', 'sheep', 'sheep', 'brick', 'brick', 'brick', 'ore', 'ore', 'ore']
+
+        shuffleArray(resourcePool);
+
+        // Shuffling the terrainhexes, except the desert hex, and placing it in an array
+        const shuffledHexes = shuffleArray([...terrainHexes.filter(hex => hex.id !== desertHex.id)]);
+
+        // Placing resources
+        for (const hex of shuffledHexes) {
+            const hexId = hex.id;
+            let placed = false;
+
+            for (let i = 0; i < resourcePool.length; i++) {
+                const resource = resourcePool[i];
+                // Placing 1 resource
+                if (isValidResourcePlacement(hexId, resource, currentResources, options)) {
+                    currentResources[hexId] = resource;
+                    resourceSelection(hex, picker, resource);
+                    resourcePool.splice(i, 1);
+                    placed = true;
+                    break;
+                }
+            }
+
+            // If there is still not placed hex, then delete the current ones, and restarting it
+            if (!placed) {
+                terrainHexes.forEach(h => {
+                    if (h.id !== desertHex.id) {
+                        h.style.backgroundImage = '';
+                    }
+                });
+                return placeResources(hexes, options, picker);
+            }
+        }
+
+        return currentResources;
+    }
+
+    // Changes the resources type based on the html select option named picker
     function changeOccuredOnPicker(hexes, currentResources, picker) {
         const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
 
@@ -55,77 +127,6 @@ const resourcesModule = (function () {
                 resourceSelection(hex, picker, resource);
             }
         });
-    }
-
-    // Backtracking algorithm to place resources
-    function placeResources(hexes, options, picker) {
-        // Filter out ocean hexes (those with IDs starting with 'b')
-        const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
-
-        const currentResources = {};
-
-        // Choose random terrain hex for desert
-        const desertIdx = Math.floor(Math.random() * terrainHexes.length);
-        const desertHex = terrainHexes[desertIdx];
-        const desertHexId = desertHex.id;
-
-        // Place desert
-        currentResources[desertHexId] = DESERT;
-        resourceSelection(desertHex, picker, DESERT);
-
-        // Initialize available resources count
-        const availableResources = {
-            wood: 4,
-            wheat: 4,
-            sheep: 4,
-            brick: 3,
-            ore: 3
-        };
-
-        // Backtracking function
-        function backtrack(index) {
-            if (index >= terrainHexes.length) {
-                return true; // All hexes assigned
-            }
-
-            const hex = terrainHexes[index];
-            const hexId = hex.id;
-
-            // Skip desert
-            if (hexId === desertHexId) {
-                return backtrack(index + 1);
-            }
-
-            // Try each resource type
-            const resourceTypes = Object.keys(availableResources);
-            for (const resource of resourceTypes) {
-                if (availableResources[resource] > 0 && isValidResourcePlacement(hexId, resource, currentResources, options)) {
-                    // Place resource
-                    currentResources[hexId] = resource;
-                    resourceSelection(hex, picker, resource);
-                    availableResources[resource]--;
-
-                    // Recurse to next hex
-                    if (backtrack(index + 1)) {
-                        return true;
-                    }
-
-                    // Backtrack: remove resource and restore count
-                    delete currentResources[hexId];
-                    hex.style.backgroundImage = '';
-                    availableResources[resource]++;
-                }
-            }
-
-            return false; // No valid placement found
-        }
-
-        // Start backtracking from index 0
-        const success = backtrack(0);
-
-        if (success) {
-            return currentResources;
-        }
     }
 
     return {

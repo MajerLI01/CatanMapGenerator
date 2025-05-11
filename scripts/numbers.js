@@ -59,67 +59,73 @@ const numbersModule = (function () {
         return true;
     }
 
-    // Placing the numbers using backtracking
+    // Fisher-Yates shuffling
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
     function placeNumbers(hexes, currentResources, options) {
         // Filter terrain hexes (t0-t18)
         const terrainHexes = Array.from(hexes).filter(hex => hex.id && hex.id.startsWith('t'));
         const currentNumbers = {};
 
-        // Initialize available numbers count
-        const availableNumbers = {};
-        numbers.forEach(num => {
-            availableNumbers[num] = (availableNumbers[num] || 0) + 1;
-        });
+        // Numbers
+        const numberPool = [...numbers];
+        shuffleArray(numberPool);
 
-        // Backtracking function
-        function backtrack(index) {
-            if (index >= terrainHexes.length) {
-                return true; // All hexes assigned
-            }
+        // Randomize hexagons
+        const shuffledHexes = shuffleArray([...terrainHexes]);
 
-            const hex = terrainHexes[index];
+        // Plcaing numbers
+        for (const hex of shuffledHexes) {
             const hexId = hex.id;
-            const numberImg = hex.querySelector('.number-img');
-
-            // Skip desert
+             // Skipping Desert
             if (currentResources[hexId] === 'desert') {
                 currentNumbers[hexId] = '';
-                if (numberImg) numberImg.style.display = "none"; // For the image not found icon 
-                return backtrack(index + 1);
+                const numberImg = hex.querySelector('.number-img');
+                if (numberImg) {
+                    numberImg.src = '';
+                    numberImg.style.display = 'none';
+                }
+                continue;
             }
 
-            // Try each number
-            for (const number in availableNumbers) {
-                if (availableNumbers[number] > 0 && isValidNumberPlacement(hexId, Number(number), currentNumbers, currentResources, options)) {
-                    // Place number
-                    currentNumbers[hexId] = Number(number);
+            // Placing the numbers
+            let placed = false;
+            for (let i = 0; i < numberPool.length; i++) {
+                const number = numberPool[i];
+                if (isValidNumberPlacement(hexId, number, currentNumbers, currentResources, options)) {
+                    // Placing 1 number
+                    currentNumbers[hexId] = number;
+                    const numberImg = hex.querySelector('.number-img');
                     if (numberImg) {
                         numberImg.src = `sources/numbers/${number}.png`;
-                        numberImg.style.display = "block"; // Needed to set it back to display the  number img
+                        numberImg.style.display = 'block';
                     }
-                    availableNumbers[number]--;
-
-                    // Recurse to next hex
-                    if (backtrack(index + 1)) {
-                        return true;
-                    }
-
-                    // Backtrack: remove number and restore count
-                    delete currentNumbers[hexId];
-                    if (numberImg) numberImg.src = '';
-                    availableNumbers[number]++;
+                    numberPool.splice(i, 1);
+                    placed = true;
+                    break;
                 }
             }
 
-            return false; // No valid placement found
+            if (!placed) {
+                // Deleting the numbers and reallocating
+                terrainHexes.forEach(h => {
+                    const numImg = h.querySelector('.number-img');
+                    if (numImg && currentResources[h.id] !== 'desert') {
+                        numImg.src = '';
+                        numImg.style.display = 'none';
+                    }
+                });
+                return placeNumbers(hexes, currentResources, options);
+            }
         }
 
-        // Start backtracking from index 0
-        const success = backtrack(0);
-
-        if (success) {
-            return currentNumbers;
-        }
+        return currentNumbers;
     }
 
     return {
